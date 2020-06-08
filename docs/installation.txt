@@ -1,0 +1,4 @@
+npm i --save react-bootstrap bootstrap react-router-dom axios
+
+npm i --save @fortawesome/fontawesome-svg-core @fortawesome/react-fontawesome
+npm i --save @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons @fortawesome/free-regular-svg-icons
