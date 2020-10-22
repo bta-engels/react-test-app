@@ -17,6 +17,16 @@ class Todos extends Component {
             })
             .catch(err => console.error(err) );
     }
+    done = (todo) => {
+       console.info(todo);
+        Axios.put(this.apiURL + "/" + todo.id, todo)
+            .then(response => {
+                this.setState({todos: this.state.todos.filter(t => t === todo ? todo : t)})
+                console.info(response.data.result);
+            })
+            .catch(err => console.error(err) );
+
+    }
     delete = (todo) => {
         Axios.delete(this.apiURL + "/" + todo.id)
             .then(response => {
@@ -39,8 +49,11 @@ class Todos extends Component {
     render() {
         let rows = [];
         this.state.todos.map(todo => (
-            rows.push(<Todo key={todo.id} todo={todo}
-                            handleDelete={this.delete}
+            rows.push(<Todo 
+                key={todo.id} 
+                todo={todo}
+                handleDelete={this.delete}
+                handleDone={this.done}
             />)
         ))
         return (
