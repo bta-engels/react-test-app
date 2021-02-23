@@ -4,7 +4,7 @@ import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
 class Todos extends Component {
-    apiURL = 'http://videostore.loc/api/todo';
+    apiURL = 'http://videostore.loc/api/todos';
 
     state = {
         todos: [],
@@ -13,7 +13,7 @@ class Todos extends Component {
     componentDidMount() {
         Axios.get(this.apiURL)
             .then(response => {
-                this.setState({todos: response.data})
+                this.setState({todos: response.data.data})
             })
             .catch(err => console.error(err) );
     }
@@ -22,7 +22,7 @@ class Todos extends Component {
         Axios.put(this.apiURL + "/" + todo.id, todo)
             .then(response => {
                 this.setState({todos: this.state.todos.filter(t => t === todo ? todo : t)})
-                console.info(response.data.result);
+                console.info(response.data.data);
             })
             .catch(err => console.error(err) );
 
@@ -41,7 +41,7 @@ class Todos extends Component {
         }
         Axios.post(this.apiURL, params)
             .then(response => {
-                this.setState({todos: [...this.state.todos, response.data.result]})
+                this.setState({todos: [...this.state.todos, response.data.data]})
             })
             .catch(err => console.error(err) );
     }
@@ -49,8 +49,8 @@ class Todos extends Component {
     render() {
         let rows = [];
         this.state.todos.map(todo => (
-            rows.push(<Todo 
-                key={todo.id} 
+            rows.push(<Todo
+                key={todo.id}
                 todo={todo}
                 handleDelete={this.delete}
                 handleDone={this.done}
