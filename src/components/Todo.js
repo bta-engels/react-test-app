@@ -22,7 +22,8 @@ class Todo extends Component {
             <li>
                 <input type="checkbox" className="ml-3"
                     defaultChecked={this.props.todo.done}
-                    onChange={this.onChange} />
+                    onChange={this.onChange}
+                />
                 <span className={this.state.todo.done ? "done ml-3" : "ml-3"}>{todo.text}</span>
                 <button className="btn-sm btn-danger float-right m-auto py-0"
                     onClick={this.props.handleDelete.bind(this, todo)}

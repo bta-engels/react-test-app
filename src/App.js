@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
-
 import About from "./components/About";
 import Form from "./components/Form";
 import Todos from "./components/Todos";

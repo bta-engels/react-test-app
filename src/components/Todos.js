@@ -4,7 +4,7 @@ import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
 class Todos extends Component {
-    apiURL = 'http://videostore.loc/api/todos';
+    apiURL = 'http://videostore-start.loc/api/todos';
 
     state = {
         todos: [],
@@ -25,7 +25,6 @@ class Todos extends Component {
                 console.info(response.data.data);
             })
             .catch(err => console.error(err) );
-
     }
     delete = (todo) => {
         Axios.delete(this.apiURL + "/" + todo.id)
