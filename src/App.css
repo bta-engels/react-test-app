@@ -1,7 +1,6 @@
 .App {
   margin: 20px;
 }
-
 ul {
   list-style: none;
   list-style-type: none;
@@ -17,3 +16,4 @@ li {
   text-align: left;
   border: 1px solid darkgrey;
 }
+

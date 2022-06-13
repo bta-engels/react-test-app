@@ -1,32 +1,55 @@
-import React, {Component} from 'react';
-import Axios from "axios";
+import React, { Component } from 'react';
+import Axios from "axios"
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
 class Todos extends Component {
-    apiURL = 'http://videostore-start.loc/api/todos';
-
-    state = {
-        todos: [],
+    apiURL = 'http://127.0.0.01:8000/api/todos';
+    constructor(props) {
+        super(props);
+        this.state = {
+            todos: [],
+            auth: null,
+        }
     }
-
     componentDidMount() {
+        let auth = this.props.auth()
+        if(auth) {
+            this.setState({
+                ...this.state,
+                auth: auth
+            })
+            Axios.defaults.headers.common['Authorization'] = "Bearer " + auth.token;
+        }
         Axios.get(this.apiURL)
             .then(response => {
-                this.setState({todos: response.data.data})
+                this.setState({todos: response.data})
             })
             .catch(err => console.error(err) );
     }
+    onError = (err) => {
+        alert(err)
+    }
     done = (todo) => {
-       console.info(todo);
+        console.info(todo);
+        if(!this.state.auth) {
+            this.onError('please Login')
+            return false;
+        }
+        Axios.defaults.headers.common['Authorization'] = "Bearer " + this.state.auth.token;
         Axios.put(this.apiURL + "/" + todo.id, todo)
             .then(response => {
                 this.setState({todos: this.state.todos.filter(t => t === todo ? todo : t)})
-                console.info(response.data.data);
+                console.info(response.data);
             })
-            .catch(err => console.error(err) );
+            .catch(err => console.info("error", err) );
     }
     delete = (todo) => {
+        if(!this.state.auth) {
+            this.onError('please Login')
+            return false;
+        }
+        Axios.defaults.headers.common['Authorization'] = "Bearer " + this.state.auth.token;
         Axios.delete(this.apiURL + "/" + todo.id)
             .then(response => {
                 this.setState({todos: this.state.todos.filter(t => t !== todo)})
@@ -38,9 +61,14 @@ class Todos extends Component {
             title: title,
             done: false,
         }
+        if(!this.state.auth) {
+            this.onError('please Login')
+            return false;
+        }
+        Axios.defaults.headers.common['Authorization'] = "Bearer " + this.state.auth.token;
         Axios.post(this.apiURL, params)
             .then(response => {
-                this.setState({todos: [...this.state.todos, response.data.data]})
+                this.setState({todos: [...this.state.todos, response.data]})
             })
             .catch(err => console.error(err) );
     }
