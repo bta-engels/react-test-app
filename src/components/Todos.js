@@ -74,14 +74,13 @@ class Todos extends Component {
     }
 
     render() {
-        let rows = [];
-        this.state.todos.map(todo => (
-            rows.push(<Todo
+        const rows = this.state.todos.map(todo => (
+            <Todo
                 key={todo.id}
                 todo={todo}
                 handleDelete={this.delete}
                 handleDone={this.done}
-            />)
+            />
         ))
         return (
             <div>
